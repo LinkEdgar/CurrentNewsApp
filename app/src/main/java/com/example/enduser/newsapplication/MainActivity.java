@@ -12,7 +12,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //Gets the latest news from the verge
     private String API_WEB_ADDRESS = "https://newsapi.org/v1/articles?source=the-verge&sortBy=top&apiKey=2ba3568a935d47f4971bfa683e064bdb";
-    private ArrayAdapter<NewsObject> adapter;
+    private NewsAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<NewsObject> newsObjectArrayList= new ArrayList<>();
         //find the listview
         ListView listView = (ListView) findViewById(R.id.list_view);
-       // NewsAdapter adapter = new NewsAdapter();
+        adapter = new NewsAdapter(this, newsObjectArrayList);
         listView.setAdapter(adapter);
 
 
@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<NewsObject> newsObjects) {
             //TODO
+            adapter.clear();
+            if(newsObjects != null && !newsObjects.isEmpty()){
+                adapter.addAll(newsObjects);
+            }
         }
     }
 }
