@@ -101,6 +101,13 @@ public final class NetworkUtils {
     //extracts all of the info we need from the JSON string and returns an ArrayList of a NewsObject type
     public static ArrayList<NewsObject> extractJsonInformation(String stringJSON){
         ArrayList<NewsObject> newsArray = new ArrayList<>();
+
+        //TODO delte this after testing
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         try {
             JSONObject newsJsonObject = new JSONObject(stringJSON);
             JSONArray articleArray = newsJsonObject.getJSONArray("articles");
