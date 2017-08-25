@@ -1,5 +1,6 @@
 package com.example.enduser.newsapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -23,9 +25,10 @@ import java.util.zip.Inflater;
  */
 
 public class NewsAdapter extends ArrayAdapter<NewsObject> {
-    public NewsAdapter(@NonNull Context context, @NonNull List<NewsObject> objects) {
-        super(context, 0, objects);
+    public NewsAdapter(Activity context, ArrayList<NewsObject> list){
+        super(context, 0, list);
     }
+
 
     @NonNull
     @Override
@@ -34,7 +37,7 @@ public class NewsAdapter extends ArrayAdapter<NewsObject> {
         View listView = convertView;
         //inflates listview if it isn't already isn't inflated
         if(listView == null){
-            listView = LayoutInflater.from(getContext()).inflate(R.layout.activity_main,parent,false);
+            listView = LayoutInflater.from(getContext()).inflate(R.layout.news_template,parent,false);
 
         }
         //creates an instance of the current news in the listview
