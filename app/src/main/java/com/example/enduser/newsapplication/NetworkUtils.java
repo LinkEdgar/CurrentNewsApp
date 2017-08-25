@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by EndUser on 8/24/2017.
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 public final class NetworkUtils {
     //takes a url and connects it, if the connection is successful it returns a string version of the  JSON object
 
-    public String makeHttpConnection(URL url){
+    public static String makeHttpConnection(URL url){
         //used to save the final json string
         String jsonString = "";
         //used to establish a connection with a Url
@@ -64,7 +65,7 @@ public final class NetworkUtils {
         return jsonString;
     }
     //Reads the input stream and returns a string of the input stream
-    public String readInputStream(InputStream inputStream) throws IOException {
+    public static String readInputStream(InputStream inputStream) throws IOException {
         //used to build the json string
         StringBuilder stringBuilder = new StringBuilder();
         //builds a string if the received input was not null
@@ -86,8 +87,7 @@ public final class NetworkUtils {
         return stringBuilder.toString();
     }
     // converts a string into a url
-    public URL stringToUrl(String stringUrl){
-        //TODO complete method
+    public static URL stringToUrl(String stringUrl){
         URL url = null;
         try{
             url = new URL(stringUrl);
@@ -99,8 +99,7 @@ public final class NetworkUtils {
         return url;
     }
     //extracts all of the info we need from the JSON string and returns an ArrayList of a NewsObject type
-    public ArrayList<NewsObject> extractJsonInformation(String stringJSON){
-        //TODO complete method
+    public static ArrayList<NewsObject> extractJsonInformation(String stringJSON){
         ArrayList<NewsObject> newsArray = new ArrayList<>();
         try {
             JSONObject newsJsonObject = new JSONObject(stringJSON);
@@ -123,5 +122,12 @@ public final class NetworkUtils {
     }
     //TODO make a method that brings all of the newtwork utils together
     //this method brings it all together for one call
+    public static List<NewsObject> createNews(String webAddress){
+        URL finalUrl = stringToUrl(webAddress);
+        String finalJson = makeHttpConnection(finalUrl);
+        List newsList = extractJsonInformation(finalJson);
+
+        return newsList;
+    }
 
 }
