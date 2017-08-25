@@ -2,6 +2,10 @@ package com.example.enduser.newsapplication;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +24,6 @@ public final class NetworkUtils {
     //takes a url and connects it, if the connection is successful it returns a string version of the  JSON object
 
     public String makeHttpConnection(URL url){
-        //TODO complete method
         //used to save the final json string
         String jsonString = "";
         //used to establish a connection with a Url
@@ -79,7 +82,6 @@ public final class NetworkUtils {
                 line = bufferedReader.readLine();
             }
         }
-        //TODO complete method
 
         return stringBuilder.toString();
     }
@@ -97,10 +99,27 @@ public final class NetworkUtils {
         return url;
     }
     //extracts all of the info we need from the JSON string and returns an ArrayList of a NewsObject type
-    public ArrayList<NewsObject> extractJsonInformation(){
+    public ArrayList<NewsObject> extractJsonInformation(String stringJSON){
         //TODO complete method
+        ArrayList<NewsObject> newsArray = new ArrayList<>();
+        try {
+            JSONObject newsJsonObject = new JSONObject(stringJSON);
+            JSONArray articleArray = newsJsonObject.getJSONArray("articles");
+            for(int x = 0; x< articleArray.length(); x++){
+                JSONObject currentObject = articleArray.getJSONObject(x);
+                String title = currentObject.getString("title");
+                String imageUrl = currentObject.getString("urlToImage");
+                String publishTime = currentObject.getString("publishedAt");
+                String clickLink = currentObject.getString("url");
+                NewsObject newsObject = new NewsObject(title,clickLink,publishTime,imageUrl);
+                newsArray.add(newsObject);
+            }
 
-        return null;
+        } catch (JSONException e) {
+            Log.e("extractJsonObject","Problem pasring the Json Object");
+        }
+
+        return newsArray;
     }
     //TODO make a method that brings all of the newtwork utils together
     //this method brings it all together for one call

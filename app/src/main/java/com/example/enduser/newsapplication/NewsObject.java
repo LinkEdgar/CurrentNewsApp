@@ -6,26 +6,26 @@ package com.example.enduser.newsapplication;
 
 public class NewsObject {
     private String titleOfArticle;
-    private String sourceOfArticle;
+    private String websiteLink;
     private String timeOfArtilcePost;
-    private int imageResourceid;
+    private String imageResource;
 
     public NewsObject(){
 
     }
-    public NewsObject(String title, String source, String time, int image){
+    public NewsObject(String title, String site, String time, String image){
         titleOfArticle = title;
-        sourceOfArticle = source;
+        websiteLink = site;
         timeOfArtilcePost = time;
-        imageResourceid = image;
+        imageResource = image;
     }
 
-    public int getImageResourceid() {
-        return imageResourceid;
+    public String getImageResource() {
+        return imageResource;
     }
 
     public String getSourceOfArticle() {
-        return sourceOfArticle;
+        return websiteLink;
     }
 
     public String getTimeOfArtilcePost() {
