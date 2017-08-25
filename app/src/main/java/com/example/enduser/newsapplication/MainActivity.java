@@ -12,7 +12,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //Gets the latest news from the verge
     private String API_WEB_ADDRESS = "https://newsapi.org/v1/articles?source=the-verge&sortBy=top&apiKey=2ba3568a935d47f4971bfa683e064bdb";
-
+    private ArrayAdapter<NewsObject> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,21 +20,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //simple array list that takes strings
         ArrayList list = new ArrayList();
-        list.add("yeet");
-        list.add("Yo!");
-        list.add("Yoshi");
+        ArrayList<NewsObject> newsObjectArrayList= new ArrayList<>();
         //find the listview
         ListView listView = (ListView) findViewById(R.id.list_view);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,list);
+       // NewsAdapter adapter = new NewsAdapter();
         listView.setAdapter(adapter);
 
 
     }
     public class NetworkAsyncTask extends AsyncTask<String, Void, List<NewsObject>>{
+        //will use the networksutil on another thread to fetch the JSOn data and turn it into a list for us to update our UI
 
         @Override
         protected List<NewsObject> doInBackground(String... params) {
-
             //if the string is valid we will run the network utils on it
             List<NewsObject> theNews = null;
             if(params != null && params.length >0){
