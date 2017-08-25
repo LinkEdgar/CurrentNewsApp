@@ -120,7 +120,6 @@ public final class NetworkUtils {
 
         return newsArray;
     }
-    //TODO make a method that brings all of the newtwork utils together
     //this method brings it all together for one call
     public static List<NewsObject> createNews(String webAddress){
         URL finalUrl = stringToUrl(webAddress);

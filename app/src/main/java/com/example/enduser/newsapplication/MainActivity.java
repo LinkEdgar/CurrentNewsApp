@@ -7,10 +7,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     //Gets the latest news from the verge
-    private String API_WEB_ADDRESS = " https://newsapi.org/v1/articles?source=the-verge&sortBy=top&apiKey=2ba3568a935d47f4971bfa683e064bdb";
+    private String API_WEB_ADDRESS = "https://newsapi.org/v1/articles?source=the-verge&sortBy=top&apiKey=2ba3568a935d47f4971bfa683e064bdb";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +30,24 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public class NetworkAsyncTask extends AsyncTask<String, Void, Void>{
+    public class NetworkAsyncTask extends AsyncTask<String, Void, List<NewsObject>>{
 
         @Override
-        protected Void doInBackground(String... params) {
-            //TODO
+        protected List<NewsObject> doInBackground(String... params) {
+
             //if the string is valid we will run the network utils on it
-            return null;
+            List<NewsObject> theNews = null;
+            if(params != null && params.length >0){
+                theNews = NetworkUtils.createNews(API_WEB_ADDRESS);
+            }
+            return theNews;
         }
         //TODO update our UI method
 
+
+        @Override
+        protected void onPostExecute(List<NewsObject> newsObjects) {
+            //TODO
+        }
     }
 }
