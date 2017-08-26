@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private NewsAdapter adapter;
     private ProgressBar loadingIndicator;
     private TextView emptyTextView;
-    //TODO fix empty listview case
-    //TODO fix time format
     //TODO add on click for the list view
     @Override
     protected void onCreate(Bundle savedInstanceState) {
