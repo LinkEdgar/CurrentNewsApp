@@ -1,17 +1,26 @@
 package com.example.enduser.newsapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private NewsAdapter adapter;
     private ProgressBar loadingIndicator;
     private TextView emptyTextView;
-    //TODO add on click for the list view
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,19 @@ public class MainActivity extends AppCompatActivity {
         adapter = new NewsAdapter(this, newsObjectArrayList);
         listView.setAdapter(adapter);
         listView.setEmptyView(findViewById(R.id.empty_listview));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NewsObject currentNews = adapter.getItem(position);
+                String stringUrl = currentNews.getSourceOfArticle();
+                Uri webAddress = Uri.parse(stringUrl);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(webAddress);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
         //Checks whether or not we have an internet connection
         ConnectivityManager cm =
                 (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
